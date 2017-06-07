@@ -25,7 +25,7 @@ const listedPrice =
 const calculateTotals =
   listings =>
     carts => {
-      // TODO
+      console.log('Hello')
     }
 
 module.exports = {
