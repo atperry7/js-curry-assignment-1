@@ -23,9 +23,9 @@ const customerItemsTotal = (listings, items) => {
   let total = 0
   for (var i = 0; i < listings.length; i++) {
     for (var j = 0; j < items.length; j++) {
-       if (listings[i].name === items[j]) {
-         total = total + listings[i].price
-       }
+      if (listings[i].name === items[j]) {
+        total = total + listings[i].price
+      }
     }
   }
 
@@ -54,10 +54,13 @@ const customerObjectCreater = (cust, listings) => {
 const calculateTotals =
   listings =>
     carts => {
-      const customers = []
-      for (let cart of carts) {
-        customers.push(customerObjectCreater(cart, listings))
-      }
+
+      const customers = carts.map((custo) => { return customerObjectCreater(custo, listings) })
+      // console.log(customers)
+      // const customers = []
+      // for (let cart of carts) {
+      //   customers.push(customerObjectCreater(cart, listings))
+      // }
       return customers
     }
 
