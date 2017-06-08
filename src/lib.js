@@ -19,11 +19,6 @@ const listedPrice =
         ? listing.price
         : 0
 
-const itemChecker = (list, item) => {
-  return list.name === item ? listing.price : 0
-}
-
-
 const customerItemsTotal = (listings, items) => {
   let total = 0
   for (var i = 0; i < listings.length; i++) {
@@ -38,13 +33,20 @@ const customerItemsTotal = (listings, items) => {
 }
 
 const customerObjectCreater = (cust, listings) => {
-  let customerObject = {name: '', total: 0}
+  let customerObject = {customer: {}, total: 0}
+
+  const mapper = cust.items.filter(item => listings.filter(list => {
+    let listingsTest = listedPrice(list)
+    return listingsTest(item)
+  }))
+
+  console.log(mapper)
+
   let total = customerItemsTotal(listings, cust.items)
-  customerObject.name = cust.customer
+  customerObject.customer = cust
   customerObject.total = total
   return customerObject
 }
-
 
 /**
  * transform carts into an array of { customer, total }
