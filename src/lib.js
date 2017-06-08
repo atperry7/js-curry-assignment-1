@@ -32,18 +32,23 @@ const customerItemsTotal = (listings, items) => {
   return total
 }
 
+const figureOutTotal = (listing, items) => {
+  const listingTest = listedPrice(listing)
+  let total
+  let totals = 0
+  for (let item of items) {
+    total = Number(listingTest(item))
+    totals = totals + total
+  }
+  return totals
+}
+
 const customerObjectCreater = (cust, listings) => {
-  let customerObject = {customer: {}, total: 0}
-
-  const mapper = cust.items.filter(item => listings.filter(list => {
-    let listingsTest = listedPrice(list)
-    return listingsTest(item)
-  }))
-
-  console.log(mapper)
+  let customerObject = {total: 0}
+  customerObject = cust
+  let aNewTotal = listings.reduce(list => figureOutTotal(list, cust.items))
 
   let total = customerItemsTotal(listings, cust.items)
-  customerObject.customer = cust
   customerObject.total = total
   return customerObject
 }
@@ -54,14 +59,7 @@ const customerObjectCreater = (cust, listings) => {
 const calculateTotals =
   listings =>
     carts => {
-
-      const customers = carts.map((custo) => { return customerObjectCreater(custo, listings) })
-      // console.log(customers)
-      // const customers = []
-      // for (let cart of carts) {
-      //   customers.push(customerObjectCreater(cart, listings))
-      // }
-      return customers
+      return carts.map((custo) => { return customerObjectCreater(custo, listings) })
     }
 
 module.exports = {
